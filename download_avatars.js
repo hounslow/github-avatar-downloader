@@ -36,4 +36,11 @@ function downloadImageByURL(url, filePath) {
         .pipe(fs.createWriteStream('./' + filePath + '.jpg'));
 }
 
-getRepoContributors("jquery", "jquery", downloadImageByURL);
+var owner = process.argv[2];
+var name = process.argv[3];
+if (owner && name){
+  getRepoContributors(owner, name, downloadImageByURL);
+} else {
+  console.log("Missing an argument!");
+  console.log("Please enter your request with following structure: node download_avatars.js <repoOwner> <repoName>");
+}
