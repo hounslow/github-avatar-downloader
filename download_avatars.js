@@ -1,13 +1,13 @@
 var fs = require('fs');
 var request = require('request');
-var GITHUB_USER = "hounslow";
-var GITHUB_TOKEN = "1de2a7211489836dfc3111d0eba924c24b396abd";
+var dotenv = require('dotenv').config();
 
 //console.log('Welcome to the GitHub Avatar Downloader!');
 
 // Gets the URL to pass into our request function
 function getURL(){
-  var requestURL = 'https://'+ GITHUB_USER + ':' + GITHUB_TOKEN + '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors';
+  console.log(dotenv['parsed']['GITHUB_USER']);
+  var requestURL = 'https://'+ dotenv['parsed']['GITHUB_USER'] + ':' + dotenv['parsed']['GITHUB_TOKEN'] + '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors';
 
   var options = {
       url: requestURL,
@@ -20,7 +20,6 @@ function getURL(){
 
 
 function getRepoContributors(repoOwner, repoName, cb) {
-
   request(getURL(), function (error, response, body) {
     console.log('error:', error);
     console.log('statusCode:', response.statusCode);
