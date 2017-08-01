@@ -5,6 +5,7 @@ var GITHUB_TOKEN = "1de2a7211489836dfc3111d0eba924c24b396abd";
 
 //console.log('Welcome to the GitHub Avatar Downloader!');
 
+// Gets the URL to pass into our request function
 function getURL(){
   var requestURL = 'https://'+ GITHUB_USER + ':' + GITHUB_TOKEN + '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors';
 
@@ -46,7 +47,7 @@ var callDownloader = function(){
   repoOwner = process.argv[2];
   repoName = process.argv[3];
 
-// Log an error if owner and name aren't included in command line
+// Log an error if owner and name aren't included in command line, this gets called when we run node downlad_avatars.js
   if (repoOwner && repoName){
     getRepoContributors(repoOwner, repoName, downloadImageByURL);
   } else {
