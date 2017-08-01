@@ -1,3 +1,4 @@
+var fs = require('fs');
 var request = require('request');
 var GITHUB_USER = "hounslow";
 var GITHUB_TOKEN = "1de2a7211489836dfc3111d0eba924c24b396abd";
@@ -14,27 +15,25 @@ var options = {
     }
 };
 
-//request.get(options)
- // .on('error', function (err) {
-   //          throw err;
-     //         })
-  //.on('response', function (response) {
-    //      console.log('Response Status Code: ', response.statusCode);
-     //     })
-  //.on('body', function(body){
-   // console.log(body);
-    //});
 request(options, function (error, response, body) {
   console.log('error:', error);
   console.log('statusCode:', response.statusCode);
   var object = JSON.parse(body);
   object.forEach(function(user){
-    console.log(user['avatar_url']);
+    cb(user.avatar_url, user.login);
     });
   });
 }
 
-getRepoContributors("jquery", "jquery", function(err, result) {
-  console.log("Errors:", err);
-  console.log("Result:", result);
-});
+function downloadImageByURL(url, filePath) {
+  request.get(url)
+       .on('error', function (err) {
+                throw err;
+                })
+        .on('response', function (response) {
+          console.log('Response Status Code: ', response.statusCode);
+          })
+        .pipe(fs.createWriteStream('./' + filePath + '.jpg'));
+}
+
+getRepoContributors("jquery", "jquery", downloadImageByURL);
